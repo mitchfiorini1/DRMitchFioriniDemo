@@ -4,18 +4,31 @@ load_dotenv()
 
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
+from langchain_core.messages import HumanMessage
+from agent.graph import agent
 
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
 
 @app.event("app_mention")
 def handle_mention(event, say):
-    print(f"✅ Bot mentioned by {event.get('user')}")
-    print(f"   Channel: {event.get('channel')}")
-    print(f"   Thread: {event.get('thread_ts')}")
-    print(f"   Text: {event.get('text')}")
+    channel_id = event.get("channel")
+    thread_ts = event.get("thread_ts") or event.get("ts")
+    user = event.get("user")
 
-    # Acknowledge in the thread
-    say(text="Got it, looking at this thread now...", thread_ts=event.get("thread_ts"))
+    print(f"✅ Mention received from {user} in thread {thread_ts}")
+
+    # Kick off the agent
+    initial_message = HumanMessage(
+        content=f"""A user tagged me in a Slack thread.
+Channel ID: {channel_id}
+Thread timestamp: {thread_ts}
+Triggered by user: {user}
+
+Please fetch the thread, find any Linear tickets mentioned, and apply any updates discussed."""
+    )
+
+    result = agent.invoke({"messages": [initial_message]})
+    print(f"✅ Agent completed. Final message: {result['messages'][-1].content}")
 
 if __name__ == "__main__":
     handler = SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"])
