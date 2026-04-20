@@ -21,7 +21,7 @@ tools = [
     post_slack_message
 ]
 
-# LLM bound to tools
+# create LLM and bind tools
 llm = ChatAnthropic(model="claude-opus-4-5").bind_tools(tools)
 
 # State is just a list of messages — the LLM reasons through them
