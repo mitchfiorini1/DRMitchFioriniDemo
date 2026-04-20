@@ -15,8 +15,8 @@ When tagged in a Slack thread, the agent:
 1. Clone the repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ticket-sync-agent.git
-cd ticket-sync-agent
+git clone https://github.com/mitchfiorini1/DRMitchFioriniDemo.git
+cd DRMitchFioriniDemo
 ```
 
 2. Create and activate virtual environment
