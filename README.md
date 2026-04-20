@@ -21,13 +21,16 @@ cd DRMitchFioriniDemo
 
 2. Create and activate virtual environment
 
+```
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-
+```
 3. Configure environment variables
 
+```
 cp .env.example .env
+```
 
 Then populate with proper keys/tokens
 
@@ -40,7 +43,9 @@ Create a Slack app at api.slack.com/apps with:
 
 5. Run the agent
 
+```
 python main.py
+```
 
 ## Why ReAct?
 
